@@ -1,13 +1,16 @@
 {
-	"name": "dg/mysql-dump",
+	"name": "clevis/mysql-dump",
 	"description": "MySQL database dump.",
 	"keywords": ["mysql"],
-	"homepage": "https://github.com/dg/MySQL-dump",
 	"license": ["BSD-3"],
 	"authors": [
 		{
 			"name": "David Grudl",
 			"homepage": "http://davidgrudl.com"
+		},
+		{
+			"name": "Clevis s.r.o.",
+			"homepage": "http://clevis.cz"
 		}
 	],
 	"autoload": {
