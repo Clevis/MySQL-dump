@@ -4,9 +4,10 @@
  * MySQL database dump.
  *
  * @author     David Grudl (http://davidgrudl.com)
+ * @author     Jan Tvrdík
  * @copyright  Copyright (c) 2008 David Grudl
  * @license    New BSD License
- * @version    1.0
+ * @version    1.1-dev
  */
 class MySQLDump
 {
@@ -22,6 +23,9 @@ class MySQLDump
 	public $tables = array(
 		'*' => self::ALL,
 	);
+
+	/** @var bool lock all tables before dumping */
+	private $useLock = TRUE;
 
 	/** @var mysqli */
 	private $connection;
@@ -42,6 +46,28 @@ class MySQLDump
 		} elseif (!$connection->set_charset('utf8')) { // was added in MySQL 5.0.7 and PHP 5.0.5, fixed in PHP 5.1.5)
 			throw new Exception($connection->error);
 		}
+	}
+
+
+
+	/**
+	 * @return bool
+	 */
+	public function getUseLock()
+	{
+		return $this->useLock;
+	}
+
+
+
+	/**
+	 * @param  bool
+	 * @return self
+	 */
+	public function setUseLock($useLock)
+	{
+		$this->useLock = $useLock;
+		return $this;
 	}
 
 
@@ -83,6 +109,10 @@ class MySQLDump
 		}
 		$res->close();
 
+		if ($this->useLock) {
+			$this->connection->query('LOCK TABLES `' . implode('` READ, `', $tables) . '` READ');
+		}
+
 		$db = $this->connection->query('SELECT DATABASE()')->fetch_row();
 		fwrite($handle, "-- Created at " . date('j.n.Y G:i') . " using David Grudl MySQL Dump Utility\n"
 			. (isset($_SERVER['HTTP_HOST']) ? "-- Host: $_SERVER[HTTP_HOST]\n" : '')
@@ -99,6 +129,10 @@ class MySQLDump
 		}
 
 		fwrite($handle, "-- THE END\n");
+
+		if ($this->useLock) {
+			$this->connection->query('UNLOCK TABLES');
+		}
 	}
 
 
