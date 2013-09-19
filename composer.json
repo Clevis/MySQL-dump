@@ -2,7 +2,7 @@
 	"name": "clevis/mysql-dump",
 	"description": "MySQL database dump.",
 	"keywords": ["mysql"],
-	"license": ["BSD-3"],
+	"license": ["BSD-3-Clause"],
 	"authors": [
 		{
 			"name": "David Grudl",
