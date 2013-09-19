@@ -31,7 +31,7 @@ class MySQLDump
 	/**
 	 * Connects to database.
 	 * @param  mysqli connection
-	*/
+	 */
 	public function __construct(mysqli $connection)
 	{
 		$this->connection = $connection;
@@ -50,7 +50,7 @@ class MySQLDump
 	 * Saves dump to the file.
 	 * @param  string filename
 	 * @return void
-	*/
+	 */
 	public function save($file)
 	{
 		$handle = strcasecmp(substr($file, -3), '.gz') ? fopen($file, 'wb') : gzopen($file, 'wb');
@@ -66,7 +66,7 @@ class MySQLDump
 	 * Writes dump to logical file.
 	 * @param  resource
 	 * @return void
-	*/
+	 */
 	public function write($handle = NULL)
 	{
 		if ($handle === NULL) {
@@ -107,7 +107,7 @@ class MySQLDump
 	 * Dumps table to logical file.
 	 * @param  resource
 	 * @return void
-	*/
+	 */
 	public function dumpTable($handle, $table)
 	{
 		$res = $this->connection->query("SHOW CREATE TABLE `$table`");
