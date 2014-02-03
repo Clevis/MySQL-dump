@@ -236,7 +236,9 @@ class MySQLDump
 		if ($mode & self::TRIGGERS) {
 			$res = $this->connection->query("SHOW TRIGGERS LIKE '" . $this->connection->real_escape_string($table) . "'");
 			while ($row = $res->fetch_assoc()) {
-				fwrite($handle, "CREATE TRIGGER {$this->delimite($row['Trigger'])} $row[Timing] $row[Event] ON $delTable FOR EACH ROW\n$row[Statement];\n\n");
+				fwrite($handle, "DELIMITER ;;\n\n");
+				fwrite($handle, "CREATE TRIGGER {$this->delimite($row['Trigger'])} $row[Timing] $row[Event] ON $delTable FOR EACH ROW\n$row[Statement];;\n\n");
+				fwrite($handle, "DELIMITER ;\n\n");
 			}
 			$res->close();
 		}
