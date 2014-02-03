@@ -7,7 +7,6 @@
  * @author     Jan Tvrdík
  * @copyright  Copyright (c) 2008 David Grudl
  * @license    New BSD License
- * @version    1.1-dev
  */
 class MySQLDump
 {
@@ -187,7 +186,7 @@ class MySQLDump
 		while ($row = $res->fetch_assoc()) {
 			$col = $row['Field'];
 			$cols[] = '`' . str_replace('`', '``', $col) . '`';
-			$numeric[$col] = (bool) preg_match('#^[^(]*(BYTE|COUNTER|SERIAL|INT|LONG|CURRENCY|REAL|MONEY|FLOAT|DOUBLE|DECIMAL|NUMERIC|NUMBER)#i', $row['Type']);
+			$numeric[$col] = (bool) preg_match('#^[^(]*(BYTE|COUNTER|SERIAL|INT|LONG$|CURRENCY|REAL|MONEY|FLOAT|DOUBLE|DECIMAL|NUMERIC|NUMBER)#i', $row['Type']);
 		}
 		$cols = '(' . implode(', ', $cols) . ')';
 		$res->close();
